@@ -1,0 +1,21 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+black = "*"
+pytest = "*"
+pytest-django = "*"
+coverage = "*"
+pytest-cov = "*"
+pytest-mock = "*"
+pytest-pythonpath = "*"
+wheel = "*"
+twine = "*"
+
+[packages]
+graphene-django = "*"
+
+[requires]
+python_version = "3.6"
