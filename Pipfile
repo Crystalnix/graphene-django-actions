@@ -13,6 +13,7 @@ pytest-mock = "*"
 pytest-pythonpath = "*"
 wheel = "*"
 twine = "*"
+model-mommy = "*"
 
 [packages]
 graphene-django = "*"

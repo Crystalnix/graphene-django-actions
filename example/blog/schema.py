@@ -2,7 +2,7 @@ from graphene import ObjectType, Schema, Node
 from graphene_django import DjangoConnectionField
 
 from blog.models import Post
-from .object_types import PostType, UserType
+from .object_types import PostType, UserType, CommentType
 from .mutations import (
     CreatePostMutation,
     ChangePostMutation,
@@ -15,6 +15,7 @@ from .mutations import (
 
 class Query(ObjectType):
     post = Node.Field(PostType)
+    comment = Node.Field(CommentType)
     posts = DjangoConnectionField(PostType)
 
     @staticmethod

@@ -11,13 +11,11 @@ class BaseCreateSerializer(ModelSerializer):
         attrs["author"] = user
         return attrs
 
-    class Meta:
-        exclude = ["author"]
-
 
 class CreatePostSerializer(BaseCreateSerializer):
-    class Meta(BaseCreateSerializer.Meta):
+    class Meta:
         model = Post
+        exclude = ["created_at", "author"]
 
 
 class ChangePostSerializer(ModelSerializer):
@@ -27,11 +25,12 @@ class ChangePostSerializer(ModelSerializer):
 
 
 class CreateCommentSerializer(BaseCreateSerializer):
-    class Meta(BaseCreateSerializer.Meta):
+    class Meta:
         model = Comment
+        exclude = ["author"]
 
 
 class ChangeCommentSerializer(ModelSerializer):
     class Meta:
         model = Comment
-        exclude = ["author"]
+        exclude = ["author", "post"]

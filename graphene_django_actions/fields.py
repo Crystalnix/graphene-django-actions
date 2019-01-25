@@ -21,4 +21,5 @@ if DJANGO_FILTER_INSTALLED:
         PermissionFilterConnectionFieldMixin, DjangoFilterConnectionField
     ):
         pass
+
     __all__.append("PermissionFilterConnectionField")

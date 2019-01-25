@@ -38,7 +38,7 @@ class DeleteMutation(PermissionMutationMixin, ClientIDMutation):
     action = DeleteAction
     deleted = Field(Boolean)
 
-    class Argument:
+    class Input:
         id = NonNull(ID)
 
     @classmethod

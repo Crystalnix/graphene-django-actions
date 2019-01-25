@@ -14,7 +14,7 @@ class BlogConfig(AppConfig):
     def init_comment_permissions():
         from .models import Comment
         from .permissions import AllowAuthor, AllowCommentPostAuthor, AllowPublished
-        from graphene_django_actions.permissions import AllowAuthenticated
+        from graphene_django_actions.permissions import AllowAuthenticated, AllowAny
         from graphene_django_actions.default_actions import (
             CreateAction,
             DeleteAction,
@@ -40,10 +40,9 @@ class BlogConfig(AppConfig):
         ChangeAction.add_permission(
             Comment, allow_author
         )  # only author of a comment can change
-        ViewAction.add_permission(Comment, allow_authenticated)
-        ListAction.add_permission(
-            Comment, allow_authenticated
-        )  # only authenticated users can get post comments
+        allow_any = AllowAny()
+        ViewAction.add_permission(Comment, allow_any)
+        ListAction.add_permission(Comment, allow_any)
 
     @staticmethod
     def init_post_permissions():
@@ -57,7 +56,7 @@ class BlogConfig(AppConfig):
             ListAction,
         )
         from graphene_django_actions.permissions import AllowAuthenticated, AllowAny
-        from .permissions import AllowAge
+        from .permissions import AllowAge, AllowPublished
 
         allow_author = AllowAuthor()
         allow_authenticated = AllowAuthenticated()
@@ -66,6 +65,9 @@ class BlogConfig(AppConfig):
 
         change_permission = allow_author & AllowAge(timedelta(days=1))
         ChangeAction.add_permission(Post, change_permission)
+
+        allow_published = AllowPublished()
+        ViewAction.add_permission(Post, allow_published)
+
         allow_any = AllowAny()
-        ViewAction.add_permission(Post, allow_any)
         ListAction.add_permission(Post, allow_any)
