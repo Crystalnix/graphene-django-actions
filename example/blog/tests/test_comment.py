@@ -139,6 +139,14 @@ class CommentMutationTest(BaseCommentTest):
             mutation = self.delete_comment(comment)
         self.assertIsNone(mutation["permissionError"])
 
+    def test_post_author_delete_comment(self):
+        comment = self.comment
+        author = comment.post.author
+        self.client.force_login(author)
+        with assert_model_count_change(Comment, -1):
+            mutation = self.delete_comment(comment)
+        self.assertIsNone(mutation["permissionError"])
+
     def create_comment(self, post):
         query = """
             mutation createComment($input: CreateCommentMutationInput!) {

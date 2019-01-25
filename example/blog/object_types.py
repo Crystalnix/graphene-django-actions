@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from graphene import Field, Node, NonNull
 from graphene_django import DjangoObjectType
 from graphene_django_actions.mixins import PermissionNodeMixin
+from graphene_django_actions.fields import PermissionFilterConnectionField
 from graphene_django_actions.object_types import (
     ObjectPermissionSet,
     AbstractObjectPermissionSet,
@@ -13,12 +14,14 @@ from graphene_django_actions.default_actions import (
     ChangeAction,
 )
 from blog.models import Post, Comment
-from graphene_django_actions.fields import PermissionConnectionField
+from blog.filters import CommentFilterSet
 
 
 class PostType(PermissionNodeMixin, DjangoObjectType):
     permission_set = Field(NonNull(ObjectPermissionSet))
-    comments = PermissionConnectionField(lambda: CommentType)
+    comments = PermissionFilterConnectionField(
+        lambda: CommentType, filterset_class=CommentFilterSet
+    )
 
     @staticmethod
     def resolve_permission_set(post, info, **kwargs):

@@ -1,5 +1,5 @@
 from graphene import ObjectType, Schema, Node
-from graphene_django import DjangoConnectionField
+from graphene_django_actions.fields import PermissionConnectionField
 
 from blog.models import Post
 from .object_types import PostType, UserType, CommentType
@@ -16,7 +16,7 @@ from .mutations import (
 class Query(ObjectType):
     post = Node.Field(PostType)
     comment = Node.Field(CommentType)
-    posts = DjangoConnectionField(PostType)
+    posts = PermissionConnectionField(PostType)
 
     @staticmethod
     def resolve_posts(root, info, **kwargs):
